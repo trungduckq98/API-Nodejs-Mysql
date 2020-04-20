@@ -1,0 +1,4 @@
+npm install express --save
+npm install -g json-server
+npm install body-parser --save
+npm install mysql --save
