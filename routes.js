@@ -7,6 +7,10 @@ module.exports = {
       todo.create(req.body, res);
     });
 
+    app.post('/products/mutablecreate', function (req, res) {
+      todo.mutablecreate(req.body, res);
+    });
+
 
 
     app.put('/products/update', function (req, res) {

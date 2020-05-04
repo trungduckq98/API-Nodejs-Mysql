@@ -31,6 +31,7 @@ function Todo() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   this.create = function (field_data, res) {
+    console.log(field_data);
     connection.acquire(function (err, con) {
       con.query('insert into product set ?', [field_data], function (err, result) {
         con.release();
@@ -39,6 +40,38 @@ function Todo() {
           res.send({ status: 1, message: 'TODO creation failed' });
         } else {
           res.send({ status: 0, message: 'TODO created successfully' });
+        }
+      });
+    });
+  };
+
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  this.mutablecreate = function (field_data, res) {
+    
+    var value = field_data.reduce((o,a) =>{
+        let ini =[];
+        ini.push(a.name);
+        ini.push(a.image);
+        ini.push(a.price);
+        ini.push(a.description);
+        ini.push(a.id_type);
+        o.push(ini);
+        return o;
+    },[]);
+
+console.log(value);
+var sql = 'INSERT INTO product (name, image, price, description, id_type) VALUES ?';
+  connection.acquire(function (err, con) {
+ con.query(sql , [value] , function (err, result) {
+        con.release();
+        if (err) {
+          res.send({ status: 1, message: 'TODO creation failed' });
+        } else {
+          res.send({ status: 0, message: 'TODO created successfully' });
+
         }
       });
     });
